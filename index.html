@@ -1,1 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RΛVI — ELITE HACKER</title>
+  <style>
+    :root{
+      --bg:#000;
+      --neon1:#00ff88;
+      --neon2:#00d3ff;
+      --accent:#9cff5e;
+    }
+    html,body{height:100%;margin:0;font-family:"Courier New",monospace;background:#000;color:var(--neon1);overflow:hidden}
+    canvas#matrix{position:fixed;inset:0;z-index:0;background:#000}
+    .vignette{position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0)30%,rgba(0,0,0,0.7)100%)}
+    .scanlines{position:fixed;inset:0;z-index:6;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.02)1px,transparent 1px);background-size:100% 3px;mix-blend-mode:overlay;opacity:0.18}
 
+    .wrap{position:relative;z-index:8;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:2rem;box-sizing:border-box}
+
+    .big-name{font-size:clamp(64px,14vw,180px);letter-spacing:8px;line-height:0.85;font-weight:900;text-transform:uppercase;display:block;position:relative;color:var(--neon1);text-shadow:0 0 20px rgba(0,255,136,0.4),0 0 60px rgba(0,211,255,0.1);margin:0 0 6px 0;-webkit-text-stroke:1px rgba(0,0,0,0.5)}
+    .big-name .a{display:inline-block;animation:beat 1s infinite cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 0 12px rgba(0,255,136,0.35))}
+    @keyframes beat{0%{transform:scale(1)}35%{transform:scale(1.15)}60%{transform:scale(.95)}100%{transform:scale(1)}}
+
+    .subtitle{font-size:14px;color:rgba(0,255,136,0.8);margin-top:8px}
+
+    .terminal{width:min(1000px,96%);border-radius:12px;background:rgba(0,0,0,0.45);padding:1.2rem;box-shadow:0 0 40px rgba(0,255,136,0.15),inset 0 1px 0 rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.08);color:#c7ffd9;font-size:14px;margin-top:14px}
+    .term-row{display:flex;gap:1rem;align-items:flex-start}
+    .prompt{color:var(--neon2);min-width:120px}
+    .command{white-space:pre-wrap;flex:1}
+
+    .footer{position:fixed;right:14px;bottom:10px;color:rgba(0,255,136,0.4);font-size:13px;z-index:10;text-shadow:0 0 10px rgba(0,255,136,0.3)}
+    .credit{position:fixed;left:14px;bottom:10px;color:rgba(0,255,136,0.6);font-size:13px;z-index:10;text-shadow:0 0 10px rgba(0,255,136,0.3)}
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="vignette"></div>
+  <div class="scanlines"></div>
+
+  <div class="wrap">
+    <h1 class="big-name" data-text="RΛVI">R<span class="a">Λ</span>VI</h1>
+    <div class="subtitle">— elite cyber alias • system infiltration active</div>
+
+    <div class="terminal">
+      <div class="term-row"><div class="prompt">guest@ravi:~$</div><div class="command">echo "Welcome to RΛVI's Network"</div></div>
+      <div class="term-row"><div class="prompt">guest@ravi:~$</div><div class="command">initializing matrix background...</div></div>
+      <div class="term-row"><div class="prompt">guest@ravi:~$</div><div class="command">access granted ✓</div></div>
+    </div>
+  </div>
+
+  <div class="credit">Design & Build by <strong>RAVI</strong></div>
+  <div class="footer">crafted for RΛVI • HACKER MODE</div>
+
+  <script>
+    // Matrix background effect
+    const canvas=document.getElementById('matrix');
+    const ctx=canvas.getContext('2d');
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
+    const letters='0123456789';
+    const fontSize=16;
+    const columns=canvas.width/fontSize;
+    const drops=[];
+    for(let x=0;x<columns;x++)drops[x]=1;
+
+    function draw(){
+      ctx.fillStyle='rgba(0,0,0,0.08)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle='#00ff55';
+      ctx.font=fontSize+'px monospace';
+      for(let i=0;i<drops.length;i++){
+        const text=letters.charAt(Math.floor(Math.random()*letters.length));
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
+        drops[i]++;
+      }
+    }
+    setInterval(draw,35);
+    window.addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight});
+  </script>
+</body>
+</html>
